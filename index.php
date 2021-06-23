@@ -1,5 +1,34 @@
 <?php
-$questions = ["bu şey düşünebilirmi?", "bu şey miyavlarmı ?", "bu şey bir yazılım mı?"];
+  $data = [
+    [
+      "question" => "aklında tuttuğun şey canlımı ?",
+      "answers" => [
+        "Evet" => "?nextQuestion=1",
+        "Hayır" => "?nextQuestion=3"
+      ]
+    ],
+    [
+      "question" => "bu şey düşünebilirmi?",
+      "answers" => [
+        "Evet" => "?writeAnswer=İnsan",
+        "Hayır" => "?nextQuestion=2"
+      ]
+    ],
+    [
+      "question" => "bu şey miyavlarmı ?",
+      "answers" => [
+        "Evet" => "?writeAnswer=Kedi",
+        "Hayır" => "index.php"
+      ]
+    ],
+    [
+      "question" => "bu şey bir yazılım mı?",
+      "answers" => [
+        "Evet" => "?writeAnswer=Comer",
+        "Hayır" => "index.php"
+      ]
+    ]
+  ];
 ?>
 <!doctype html>
 <html lang="en">
@@ -22,59 +51,8 @@ $questions = ["bu şey düşünebilirmi?", "bu şey miyavlarmı ?", "bu şey bir
     </style>
 </head>
 <body>
-<?php
-if (!isset($_GET["nextQuestion"]) && !isset($_GET["writeAnswer"])) {
-    ?>
-    <div class="card">
-        <h5 class="card-header text-center">
-            Şunlardan birini aklında tut
-            <div class="mt-4 w-100 d-flex justify-content-between">
-                <button type="button" disabled class="btn btn-primary">İNSAN</button>
-                <button type="button" disabled class="btn btn-primary">KEDİ</button>
-                <button type="button" disabled class="btn btn-primary">COMER</button>
-            </div>
-        </h5>
-        <div class="card-body">
-            <h5 class="card-title">Aklında tuttuğun şey canlımı ?</h5>
-            <div class="mt-2 d-flex justify-content-evenly align-items-center">
-                <a href="?nextQuestion=1" class="btn btn-primary">Evet</a>
-                <a href="?nextQuestion=3" class="btn btn-primary">Hayır</a>
-            </div>
-        </div>
-    </div>
-<?php } else if (@$_GET["nextQuestion"] == 1) { ?>
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title"><?php echo $questions[0]; ?></h5>
-            <div class="mt-2 d-flex justify-content-evenly align-items-center">
-                <a href="?writeAnswer=İnsan" class="btn btn-primary">Evet</a>
-                <a href="?nextQuestion=2" class="btn btn-primary">Hayır</a>
-            </div>
-        </div>
-    </div>
-<?php } else if (@$_GET["nextQuestion"] == 2) { ?>
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title"><?php echo $questions[1]; ?></h5>
-            <div class="mt-2 d-flex justify-content-evenly align-items-center">
-                <a href="?writeAnswer=Kedi" class="btn btn-primary">Evet</a>
-                <a href="index.php" class="btn btn-primary">Hayır</a>
-            </div>
-        </div>
-    </div>
-<?php } else if (@$_GET["nextQuestion"] == 3) { ?>
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title"><?php echo $questions[2]; ?></h5>
-            <div class="mt-2 d-flex justify-content-evenly align-items-center">
-                <a href="?writeAnswer=COMER" class="btn btn-primary">Evet</a>
-                <a href="index.php" class="btn btn-primary">Hayır</a>
-            </div>
-        </div>
-    </div>
-<?php } ?>
 
-<?php if (isset($_GET["writeAnswer"]) && trim($_GET["writeAnswer"]) !== "") { ?>
+<?php if (isset($_GET["writeAnswer"])) { ?>
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">İşte cevabım <b><?php echo $_GET["writeAnswer"]; ?></b></h5>
@@ -83,8 +61,31 @@ if (!isset($_GET["nextQuestion"]) && !isset($_GET["writeAnswer"])) {
             </div>
         </div>
     </div>
-<?php } ?>
 
+<?php } else {
+  $index = isset($_GET["nextQuestion"]) ? $_GET["nextQuestion"] : 0;
+  ?>
+    <div class="card">
+      <?php if ($index == 0) : ?>
+          <h5 class="card-header text-center">
+              Şunlardan birini aklında tut
+              <div class="mt-4 w-100 d-flex justify-content-between">
+                  <button type="button" disabled class="btn btn-primary">İNSAN</button>
+                  <button type="button" disabled class="btn btn-primary">KEDİ</button>
+                  <button type="button" disabled class="btn btn-primary">COMER</button>
+              </div>
+          </h5>
+      <?php endif; ?>
+        <div class="card-body">
+            <h5 class="card-title"><?php echo $data[$index]["question"] ?></h5>
+            <div class="mt-2 d-flex justify-content-evenly align-items-center">
+              <?php foreach ($data[$index]["answers"] as $answerKey => $answerValue) { ?>
+                  <a href="<?= $answerValue ?>" class="btn btn-primary"><?= $answerKey ?></a>
+              <?php } ?>
+            </div>
+        </div>
+    </div>
+<?php } ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
