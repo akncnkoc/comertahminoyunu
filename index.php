@@ -1,7 +1,5 @@
 <?php
-$catch = ["insan", "kedi", "comer"];
 $questions = ["bu şey düşünebilirmi?", "bu şey miyavlarmı ?", "bu şey bir yazılım mı?"];
-
 ?>
 <!doctype html>
 <html lang="en">
