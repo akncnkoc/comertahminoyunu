@@ -1,7 +1,7 @@
 <?php
+  $catches =["İnsan", "Kedi", "Comer"];
   $data = [
-    [
-      "question" => "aklında tuttuğun şey canlımı ?",
+    ["question" => "aklında tuttuğun şey canlımı ?",
       "answers" => [
         "Evet" => "?nextQuestion=1",
         "Hayır" => "?nextQuestion=3"
@@ -10,21 +10,21 @@
     [
       "question" => "bu şey düşünebilirmi?",
       "answers" => [
-        "Evet" => "?writeAnswer=İnsan",
+        "Evet" => "?writeAnswer=".$catches[0],
         "Hayır" => "?nextQuestion=2"
       ]
     ],
     [
       "question" => "bu şey miyavlarmı ?",
       "answers" => [
-        "Evet" => "?writeAnswer=Kedi",
+        "Evet" => "?writeAnswer=".$catches[1],
         "Hayır" => "index.php"
       ]
     ],
     [
       "question" => "bu şey bir yazılım mı?",
       "answers" => [
-        "Evet" => "?writeAnswer=Comer",
+        "Evet" => "?writeAnswer=".$catches[2],
         "Hayır" => "index.php"
       ]
     ]
@@ -70,9 +70,9 @@
           <h5 class="card-header text-center">
               Şunlardan birini aklında tut
               <div class="mt-4 w-100 d-flex justify-content-between">
-                  <button type="button" disabled class="btn btn-primary">İNSAN</button>
-                  <button type="button" disabled class="btn btn-primary">KEDİ</button>
-                  <button type="button" disabled class="btn btn-primary">COMER</button>
+                <?php foreach ($catches as $catch): ?>
+                    <button type="button" disabled class="btn btn-primary"><?=$catch?></button>
+                <?php endforeach; ?>
               </div>
           </h5>
       <?php endif; ?>
